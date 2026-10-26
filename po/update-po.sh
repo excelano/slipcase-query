@@ -29,6 +29,9 @@
 # in a comment. The way a dropped string is found is not by reading them — it
 # is `pseudo.sh` beside this, where anything still in English stands out on
 # sight.
+#
+# Author: David M. Anderson
+# Built with AI assistance (Claude, Anthropic)
 set -eu
 
 # One directory up: this crate is the repository, so the catalogues sit beside

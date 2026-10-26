@@ -34,6 +34,6 @@ Nothing that persists. There is no settings file, no recent-folders list, no cac
 
 ## Verifying releases
 
-Every GitHub release includes the `.deb` packages built by GitHub Actions from the tagged commit. The workflow that builds them is `.github/workflows/linux.yml` in this repository, and it is public and auditable: it builds the package, checks that it declares the architecture its executable actually is, runs lintian at error and warning with no overrides, installs it, and confirms the executable loads.
+Every GitHub release carries the `.deb` packages, the MSIX and the macOS binary, built by `build-release`, the release program in excelano/shipping, from the tagged commit using the packaging under `packaging/` in this repository, which is public and auditable. The release attaches no checksum file, so a download from it is vouched for only by where it came from; the apt repository is the route with a signature.
 
 Packages served from the Excelano apt repository are signed; https://excelano.com/apt/ has the key and the one-line setup.

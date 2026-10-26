@@ -31,8 +31,6 @@
 # and so it is what the listing calls one. The German is not a translation of the English
 # line for line — German runs about a third longer, and the short description
 # has a hard limit of 500 — so it says the same things in its own length.
-#
-# `store_locales` in ship.conf gains `de-de` when the store targets land.
 
 apple-review-notes = """
 Slipcase Query reads Slipcase containers: ordinary ZIP files that hold one document plus a small TOML file describing it. It shows an empty table until it is given a folder that holds some, so please start with the sample below rather than with an arbitrary folder — an empty result is what this application correctly does with a folder that has no containers in it, and it looks like a failure.
