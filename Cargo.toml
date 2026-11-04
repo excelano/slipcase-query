@@ -29,7 +29,7 @@ path = "src/main.rs"
 # `default-features = false` leaves the command behind: the `cli` feature is
 # clap and rustyline, and a window needs neither. It also means this crate is
 # the library alone, so nothing here puts a second `slipql` on PATH.
-slipql = { version = "0.1.1", default-features = false }
+slipql = { version = "0.3", default-features = false }
 # The container library, for what the detail pane says about a content file. Reached
 # directly rather than through slipql's re-export so that the dependency is
 # visible here, and pinned to the same requirement slipql resolves: two `slpc`
@@ -40,7 +40,7 @@ slipql = { version = "0.1.1", default-features = false }
 # behind it: the function that decides where a content file member lands, rather than
 # letting a member named `../x` or `C:\x` decide. A window that hands content files
 # to the system needs it; without the feature it is compiled out.
-slpc = { version = "0.4.0", features = ["fs"] }
+slpc = { version = "0.7", features = ["fs"] }
 # The flyleaf tree, drawn read-only here through `ReadOnly` in `src/policy.rs`.
 # One TOML editor across Tommy Flyleaf, Slipcase Desktop and this, rather than
 # three that drift; behaviour it lacks goes there.

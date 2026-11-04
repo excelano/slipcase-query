@@ -1234,8 +1234,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "300e883d756b2e4ec94e02791f39b04b522276138852cfc41d9fb7e904106099"
 dependencies = [
  "cfg-if",
+ "js-sys",
  "libc",
  "r-efi 6.0.0",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -1876,6 +1878,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ee6cda3051665f1fb8d9e08fc35c96d5a244fb1be711a03b71118828afc9a873"
 dependencies = [
  "jni-sys 0.3.1",
+]
+
+[[package]]
+name = "nix"
+version = "0.31.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf20d2fde8ff38632c426f1165ed7436270b44f199fc55284c38276f9db47c3d"
+dependencies = [
+ "bitflags 2.13.2",
+ "cfg-if",
+ "cfg_aliases",
+ "libc",
 ]
 
 [[package]]
@@ -2927,9 +2941,9 @@ dependencies = [
 
 [[package]]
 name = "slipql"
-version = "0.1.1"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6bab2d6cd2b3cdea48ea4a77f6159374719cdced551d82f7c293d6762dccf36"
+checksum = "29a67e38b1aedc899b7295833f8b1b03d4eca5f6facc7c953116367680b84681"
 dependencies = [
  "slpc",
  "unicode-width",
@@ -2946,9 +2960,9 @@ dependencies = [
 
 [[package]]
 name = "slpc"
-version = "0.4.1"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc8044e1e4760d0d66faf6753b70217741e920c310301857cf6d5ecdb76db596"
+checksum = "2cde69535772b7ac28a033f8566ff5ba8de98aa32573a06c57187ff44af5ae74"
 dependencies = [
  "tempfile",
  "toml_edit",
@@ -3300,9 +3314,9 @@ dependencies = [
 
 [[package]]
 name = "typed-path"
-version = "0.12.3"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8e28f89b80c87b8fb0cf04ab448d5dd0dd0ade2f8891bae878de66a75a28600e"
+checksum = "9ce898823d8cd0f028662d2f349694b1af0a5cc9be83f1d213a00d3147445e1e"
 
 [[package]]
 name = "uds_windows"
@@ -4481,15 +4495,19 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "8.6.0"
+version = "9.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2d04a6b5381502aa6087c94c669499eb1602eb9c5e8198e534de571f7154809b"
+checksum = "eaeb7f16d2605b49aef586996ded29e65642fab7259a3077e537351df6d80426"
 dependencies = [
  "crc32fast",
  "flate2",
+ "getrandom 0.4.3",
  "indexmap",
+ "libc",
  "memchr",
+ "nix",
  "typed-path",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]

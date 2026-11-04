@@ -12,10 +12,10 @@
 # Nothing else reads this. The GitHub release, the Debian changelog and the
 # AppStream entry take commit subjects.
 
-version = "0.3.0"
+version = "0.4.0"
 
 [locales]
 [locales.de-de]
-whats-new = "Aus Filebase wird Slipcase Query, damit die drei Slipcase-Desktopanwendungen als eine Familie lesbar sind: Slipcase Desktop bearbeitet einen Container, Slipcase Open öffnet einen, Slipcase Query stellt einem Ordner voller Container eine Frage. Sonst hat sich nichts geändert."
+whats-new = "Sicherheitsversion: Die ZIP-Bibliothek, mit der Slipcase Query Container liest, ist auf 9.1 aktualisiert und schließt damit eine kritische und mehrere schwere Lücken beim Lesen von Archiven. Ein Eintrag, der sich beim Entpacken über seine angegebene Größe hinaus ausdehnt, wird jetzt als Fehler abgewiesen."
 [locales.en-us]
-whats-new = "Filebase is now Slipcase Query, so that the three Slipcase desktop applications read as one family: Slipcase Desktop edits a container, Slipcase Open opens one, Slipcase Query asks a folder of them a question. Nothing else changed."
+whats-new = "Security release: the ZIP library Slipcase Query reads containers with moves to 9.1, closing a critical and several high-severity flaws in archive reading. A member that inflates past its recorded size is now refused as an error."
