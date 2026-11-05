@@ -65,7 +65,7 @@ The package declares runFullTrust and no other capability. It reads only the fol
 
 [locales."en-us"]
 website = "https://excelano.com/slipcase-query/"
-support = "https://excelano.com/slipcase-query/#support"
+support = "https://excelano.com/support/?app=Slipcase%20Query&channel=Mac%20App%20Store"
 privacy = "https://excelano.com/legal/#slipcase-query"
 description = """
 A Slipcase container is a file with its description attached: a document of any kind, packed with a small text file that says what it is. The description travels with the document, so it is still there after the file has been copied, renamed, mailed and filed.
@@ -149,7 +149,7 @@ keywords = [
 
 [locales."de-de"]
 website = "https://excelano.com/slipcase-query/"
-support = "https://excelano.com/slipcase-query/#support"
+support = "https://excelano.com/support/?app=Slipcase%20Query&channel=Mac%20App%20Store"
 privacy = "https://excelano.com/legal/#slipcase-query"
 description = """
 Ein Slipcase-Container ist eine Datei mit ihrer Beschreibung darin: ein Dokument beliebiger Art, gepackt mit einer kleinen Textdatei, die sagt, was es ist. Die Beschreibung reist mit dem Dokument und ist noch da, nachdem die Datei kopiert, umbenannt, verschickt und abgelegt wurde.
