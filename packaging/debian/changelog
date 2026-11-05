@@ -1,3 +1,13 @@
+slipcase-query (0.4.0) unstable; urgency=low
+
+  * slipql 0.3, slpc 0.7 and zip 9.1: fixes GHSA-m665-v7pm-7grj (critical) and four high/medium advisories in archive reading
+  * Screenshot scripts drop the generated-by-ship line
+  * Remove ship.conf and its reference in store-listing.toml; SECURITY.md names build-release and every release artifact; attribution headers in scripts
+  * Take portal-theme and flyleaf's ReadOnly in place of the two modules
+  * Microsoft Store: the Slipcase Query product's StoreId
+
+ -- David M. Anderson <david.anderson@excelano.com>  Wed, 04 Nov 2026 22:10:42 -0600
+
 slipcase-query (0.3.0) unstable; urgency=low
 
   * Rename to Slipcase Query
