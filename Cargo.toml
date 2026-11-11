@@ -1,10 +1,9 @@
 [package]
 name = "slipcase-query"
 description = "Query a directory of Slipcase containers by their flyleaf and look at what comes back"
+publish = false
 homepage = "https://slipcaseformat.org"
 readme = "README.md"
-keywords = ["slipcase", "query", "flyleaf", "gui", "egui"]
-categories = ["gui", "filesystem"]
 version = "0.4.0"
 edition = "2021"
 authors = ["David M. Anderson"]
