@@ -225,7 +225,7 @@ foreach ($field in 'Name', 'PublisherDisplayName') {
 }
 $publisher = $env:STORE_PUBLISHER
 if (-not $publisher) {
-    Refuse 'no STORE_PUBLISHER in the environment - it is the X.500 string Partner Center shows under Product management, Product identity, as Package/Identity/Publisher, and it is the excelano organisation secret of that name'
+    Refuse 'no STORE_PUBLISHER in the environment - it is the X.500 string Partner Center shows under Product management, Product identity, as Package/Identity/Publisher'
 }
 # The one value with a shape worth checking. `Publisher` is an X.500 string and
 # the display name is what gets put there by mistake; a package whose Publisher

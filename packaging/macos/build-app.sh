@@ -63,11 +63,11 @@ usage: build-app.sh [--binary PATH] [--outdir DIR] [--universal] [--sign ID]
                  declares, however it was built. PROFILE is the
                  .provisionprofile downloaded from the developer portal.
 
-                 The release binary is built on the Apple silicon runner and
+                 The release binary is built universal on the Mac and
                  attached to the release, so signing it here is a download and
                  this command, with no toolchain and nothing compiled:
 
-                   gh release download v0.1.0 -p slipcase-query-universal
+                   gh release download vX.Y.Z -p slipcase-query-universal
                    ./packaging/macos/build-app.sh \
                        --binary ./slipcase-query-universal \
                        --store ~/Downloads/Slipcase_Query_Mac_App_Store.provisionprofile
