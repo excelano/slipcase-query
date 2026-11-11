@@ -66,19 +66,14 @@
 
   <Resources>
     <!-- The package's languages. `en-us` because the application is written
-         in US English; it said `en-gb` until 2026-09-06, inherited from
-         slipcase-desktop's manifest and argued for nowhere. `de-de` beside it
-         since 2026-09-10, because the application now speaks German. Both
-         show in Partner Center's Packages panel - 0.1.0's read `en-gb` - and
-         both must match `build-msix.ps1`'s makepri `/dq`, which spells the
-         pair `en-US_de-DE`, or the index has no default language and fails
-         silently. They take effect on the next package uploaded. Each is a
-         tag Partner Center opens a *new* submission's Store listing under,
-         which is how a package language becomes a listing language - measured
-         on duckling 2026-09-09. It cannot rename a listing that already
-         exists - that one is deleted and a new one added on the Store
-         listings page. slipcase-desktop met this first,
-         on 2026-08-31; `~/fenster/LIMITS.md` is the long-form record. -->
+         in US English, and `de-de` because it speaks German. Both show in
+         Partner Center's Packages panel, and both must match
+         `build-msix.ps1`'s makepri `/dq`, which spells the pair
+         `en-US_de-DE`, or the index has no default language and fails
+         silently. Each is a tag Partner Center opens a *new* submission's
+         Store listing under, which is how a package language becomes a
+         listing language. It cannot rename a listing that already exists:
+         that one is deleted and a new one added on the Store listings page. -->
     <Resource Language="en-us" />
     <Resource Language="de-de" />
   </Resources>
@@ -99,7 +94,7 @@
       </uap:VisualElements>
 
       <!-- **No Extensions, where every sibling declares file associations here.**
-           Slipcase Desktop claims `.slpc`, Segler claims `.dclx` and `.dclg`.
+           Slipcase Desktop claims `.slpc`.
            Slipcase Query opens a *folder*, and there is no extension in that: the
            Windows shell has no notion of an application that handles a
            directory the way a Linux desktop entry does with

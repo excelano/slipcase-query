@@ -355,7 +355,7 @@ fn notices_of(tally: &Tally, truncated: bool) -> Notices {
 /// keys are ad hoc by design and a query that projects one is asking whether it
 /// is there. `slipql::Value`'s own `Display` writes a string as itself and
 /// everything else as TOML, which is what a person who authored the flyleaf
-/// would recognise.
+/// would recognize.
 #[must_use]
 pub fn cell(row: &Row, column: &str) -> String {
     row.cells

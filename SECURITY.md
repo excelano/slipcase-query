@@ -2,13 +2,13 @@
 
 ## Reporting a vulnerability
 
-Please report suspected vulnerabilities privately through GitHub Security Advisories at https://github.com/excelano/slipcase-query/security/advisories/new. If you would rather not use GitHub, email david.anderson@excelano.com instead. I aim to respond within seven days.
+Please report suspected vulnerabilities privately, using the **Report a vulnerability** button on the Security tab of this repository. If that button is not there, or you would rather not go through GitHub, email david.anderson@excelano.com instead. I aim to respond within seven days.
 
 Please do not open public issues for security problems.
 
 ## Supported versions
 
-The latest release receives security fixes. Older versions are not supported.
+The latest release receives security fixes. Older versions are not supported. A fix ships in a new release; update the way you installed.
 
 ## What Slipcase Query can access
 
@@ -18,11 +18,11 @@ Slipcase Query is a desktop application that runs locally on your machine. It li
 
 The flyleaf member is decompressed before it can be parsed, so a container is a claim on memory before it is known to be one. The `slpc` library bounds that read, and a container over the bound is skipped and reported rather than read.
 
-A scan is also a claim on memory in this application in a way it is not in the `slipql` command, because a window holds its rows where a pipe forgets them. A run stops at five thousand rows and says on screen that it did, rather than filling memory with an answer nobody asked for.
+A scan is also a claim on memory in this application in a way it is not in the `slipql` command, because a window holds its rows where a pipe forgets them. A run stops at a fixed number of rows and says on screen that it did, rather than filling memory with an answer nobody asked for.
 
 ## Handing a content file to another application
 
-Pressing **Open content file** extracts that container's content file and asks the operating system to open it. Two things about that are worth stating plainly.
+Pressing **Open content file** extracts that container's content file and asks the operating system to open it.
 
 The content file is written to a directory of this process's own, created with mode 0700 on Unix and removed with its contents when the application exits. Nothing is ever written beside the container you are reading. Where the content file lands is decided by `slpc`, not by the name inside the container, so a member named `../elsewhere` or an absolute path cannot escape that directory.
 
@@ -30,10 +30,8 @@ What happens next is the operating system's decision, not this application's. Sl
 
 ## What Slipcase Query stores
 
-Nothing that persists. There is no settings file, no recent-folders list, no cache and no index — every query is a fresh scan of what is on disk now, which is why there is no stale state to go wrong. The only thing written anywhere is the temporary content file described above, and it goes when the application does.
+Nothing that persists. There is no settings file, no recent-folders list, no cache and no index — every query is a fresh scan of what is on disk now, so there is no stale state to go wrong. The only thing written anywhere is the temporary content file described above, and it goes when the application does.
 
 ## Verifying releases
 
-Every GitHub release carries the `.deb` packages, the MSIX and the macOS binary, built by `build-release`, the release program in excelano/shipping, from the tagged commit using the packaging under `packaging/` in this repository, which is public and auditable. The release attaches no checksum file, so a download from it is vouched for only by where it came from; the apt repository is the route with a signature.
-
-Packages served from the Excelano apt repository are signed; https://excelano.com/apt/ has the key and the one-line setup.
+Every GitHub release carries the `.deb` packages, the MSIX and the macOS binary, built by `build-release`, the release program in excelano/shipping, from the tagged commit using the packaging under `packaging/` in this repository, which is public and auditable. The release attaches no checksum file, so a download from it is vouched for only by where it came from. Packages served from the Excelano apt repository are signed; https://excelano.com/apt/ has the key and the one-line setup.

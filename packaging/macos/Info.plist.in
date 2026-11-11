@@ -3,35 +3,12 @@
   The bundle's property list. `build-app.sh` substitutes @VERSION@ and @BUILD@
   from Cargo.toml, the way `packaging/debian/control.in` is substituted.
 
-  Two kinds of declaration do the association, and they are not the same
-  thing. `UTImportedTypeDeclarations` says what a DocLang archive and a DocLang
-  document *are*. `CFBundleDocumentTypes` says that this application handles
-  them. A bundle carrying only the second claims documents it never described;
-  one carrying only the first describes types nothing opens.
-
-  The declarations are **imported** rather than exported, and this is where
-  the bundle differs from slipcase-desktop's, whose type is its own. DocLang
-  is the LF AI & Data Foundation's format and `spec.md` is its authority; this
-  application edits it and does not define it, so exporting the type would
-  claim an ownership the platform would then believe. An imported declaration
-  is what macOS uses for an extension nothing else on the machine declares,
-  which today is every machine, and it yields to an exported one the day the
-  DocLang project ships its own. The identifiers are in this application's
-  namespace because the specification names no UTI; if the project adopts
-  one, these change to it, the way `packaging/linux/mime/doclang.xml` says the
-  provisional archive media type would.
-
-  `LSHandlerRank` is Default rather than Owner for the same reason. Editor
-  rather than Viewer for `CFBundleTypeRole`, because Save writes the document
-  back and Viewer would be a claim to the platform that is not true.
-
-  Two types with two icons, because a file type draws its own icon by its own
-  mechanism and `.dclx` and `.dclg` should tell apart in Finder the way they
-  do in a Linux file manager. Three icon directories is what that costs.
+  No `CFBundleDocumentTypes` and no type declaration. The application opens a
+  folder, and a folder is not a document type a bundle can claim, so there is
+  nothing to associate and a single icon.
 
   `LSApplicationCategoryType` is required by App Store Connect and refused at
-  upload without one. Productivity is what `slipcase-query.desktop` says with
-  `Office;WordProcessor;`, and the honest fit for an editor.
+  upload without one.
 
   `LSMinimumSystemVersion` is 11.0. Nothing here calls anything newer than
   the Apple Event manager and `NSFileManager`, and 11.0 is where Apple silicon
@@ -74,9 +51,8 @@
 	<string>APPL</string>
 
 	<!--
-	  "Slipcase Query" rather than the crate name, which is DESIGN.md 9's naming
-	  rule and the same choice `eframe::run_native` makes for the window
-	  title. Both stores took the bare name on 2026-09-04.
+	  "Slipcase Query" rather than the crate name, the same choice
+	  `eframe::run_native` makes for the window title.
 	-->
 	<key>CFBundleName</key>
 	<string>Slipcase Query</string>
@@ -110,7 +86,7 @@
 	  it App Store Connect marks each build "Missing Compliance" and holds it
 	  out of TestFlight until somebody clicks through a dialog.
 
-	  `false` is the honest answer. This application implements no
+	  `false` is the accurate answer. This application implements no
 	  cryptography and makes no network call, so the exemption for HTTPS does
 	  not even arise. An archive is a ZIP, and `zip` is built with `deflate`
 	  alone; an encrypted member is refused, not decrypted.

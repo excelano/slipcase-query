@@ -126,7 +126,7 @@ install -m 0644 "${root}/LICENSE" "${stage}/usr/share/doc/slipcase-query/copyrig
 # Debian policy wants a changelog in every binary package, and lintian makes
 # its absence an error rather than a warning: somebody installing from an apt
 # repository has no other way to see what changed between two versions, and
-# DESIGN.md §8 sends this package through one.
+# this package is served from one.
 #
 # Hand-written rather than derived from `git log`, which was the alternative
 # considered. Deriving it would need a git checkout, which `--binary` exists so

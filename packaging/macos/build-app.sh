@@ -1,23 +1,22 @@
 #!/bin/sh
-# Assemble the application bundle DESIGN.md §8 describes: the executable, the
-# property list, and the
-# three icons.
+# Assemble the application bundle: the executable, the property list, and the
+# icon.
 #
 # The bundle is the unit of everything on macOS. A bare executable can draw a
 # window, but it has no bundle identifier, Launch Services files it as a
 # nameless foreground process, and nothing can be registered or associated
-# with it. `lsappinfo` reports `bundleID=[ NULL ]` for one, which is the whole
-# reason this script exists.
+# with it. `lsappinfo` reports `bundleID=[ NULL ]` for one, which is why this
+# script exists.
 #
 # It signs the bundle when it is given an identity, because the Mac App Store
-# is the chosen channel and an unsigned bundle is not a thing that can be
+# is the channel and an unsigned bundle is not a thing that can be
 # tested: the App Sandbox is inert until the entitlement is inside a signature,
 # so an unsigned bundle carrying `Slipcase Query.entitlements` is not sandboxed and
 # proves nothing. `README.md` beside this file says which certificate is which.
 #
-# This is slipcase-desktop's script with three icons where it has one and two
-# type declarations where it has one. Every refusal in it was measured there
-# first, and the comment beside each says what it cost.
+# This is slipcase-desktop's script without the type declaration, because this
+# application opens a folder and declares no file type. A refusal in it was
+# measured there unless the comment beside it says otherwise.
 #
 # Author: David M. Anderson
 # Built with AI assistance (Claude, Anthropic)
@@ -166,8 +165,7 @@ target_dir=$(cd "$root" && cargo metadata --format-version 1 --no-deps |
 # separately and joined here. `lipo` is the only step: nothing is compiled
 # twice by this script and nothing is compiled at all.
 # Only when nothing was handed over. `--binary` takes an executable built
-# elsewhere and already joined - the Apple silicon runner attaches a universal
-# one to the release, and that is the file this is given for a Store build, so
+# elsewhere and already joined - the release carries a universal one, and that is the file this is given for a Store build, so
 # there is nothing here to compile or to join. The architecture check below is
 # what holds in either case, and it is asked of whatever is about to be
 # packaged rather than only of what `lipo` wrote.
@@ -198,8 +196,8 @@ fi
 # or worse, accepted and unrunnable on half the machines that bought it. Asked
 # of whatever is about to be packaged rather than only of what `lipo` just
 # wrote, because `--binary` takes one built elsewhere: the release binary is
-# built on the runner and signed here, so the joining is no longer the only
-# way a universal binary arrives.
+# built on the Mac and signed here, so the joining is not the only way a
+# universal binary arrives.
 if [ "$universal" = yes ] || [ -n "$store_profile" ]; then
     for triple in x86_64 arm64; do
         lipo -info "$binary" | grep -q "$triple" || {
@@ -209,14 +207,12 @@ if [ "$universal" = yes ] || [ -n "$store_profile" ]; then
     done
 fi
 
-# **A private symbol in the binary is a rejection, and one cost slipcase-desktop
-# a review cycle.** Its 0.1.1 was refused on 2026-08-31 for referencing
-# `_CGSSetWindowBackgroundBlurRadius`, which arrived through `winit` and which
-# neither application calls. Review scans the symbol table rather than the
-# call graph, so *unreachable* is not *absent*. The workspace `Cargo.toml`'s
-# `[patch.crates-io]` is what removes it, and this is what notices if it or
-# anything like it comes back; before that patch this tree's own release
-# binary carried it and `_CGSMainConnectionID` beside it.
+# **A private symbol in the binary is a rejection under guideline 2.5.1.**
+# `_CGSSetWindowBackgroundBlurRadius` and `_CGSMainConnectionID` arrive through
+# `winit`, and this application never calls them. Review scans the symbol
+# table rather than the call graph, so *unreachable* is not *absent*.
+# `Cargo.toml`'s `[patch.crates-io]` removes them, and this is what notices if
+# they or anything like them come back.
 #
 # **The question it asks is a real one rather than a list of names.** For
 # every undefined symbol the executable imports from a system *framework*,
@@ -293,8 +289,7 @@ private_symbols() {
 }
 private_symbols "$binary"
 
-# Two numbers, not one, and that is the whole reason `version.sh` takes an
-# argument. `CFBundleShortVersionString` is what a person sees in the About
+# Two numbers, not one, which is why `version.sh` takes an argument. `CFBundleShortVersionString` is what a person sees in the About
 # box and is the release version. `CFBundleVersion` is what App Store Connect
 # deduplicates uploads by: it must increase on *every* upload, including a
 # rejected one resubmitted with no change, so it cannot be the release
@@ -427,7 +422,7 @@ if [ -n "$store_profile" ]; then
     # through the signature, through `productbuild`, and past `altool
     # --validate-app`. The upload is then accepted, ingestion rejects it hours
     # later by email, and nothing appears in App Store Connect at all.
-    # slipcase-desktop measured it on 2026-08-29. The profile also carries
+    # slipcase-desktop measured it. The profile also carries
     # `kMDItemWhereFroms`, holding the portal URL with the team and profile
     # identifiers in it, which would otherwise ship inside the application.
     xattr -cr "$app"
@@ -523,7 +518,7 @@ ENTITLEMENTS
     # Services does not ask whether a bundle can launch before choosing it,
     # and among copies of one identifier it prefers the newer version, so a
     # submission build sitting here is a handler candidate. slipcase-desktop
-    # measured it on 2026-09-04: every double-click launched the Store build
+    # measured it: every double-click launched the Store build
     # and the kernel killed it, one crash report per attempt and no window.
     # What registers a bundle is a hand-off, `lsregister -f` on a development
     # build at this same path being the usual one, and the claim survives

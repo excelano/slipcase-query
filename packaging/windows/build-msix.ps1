@@ -19,9 +19,9 @@
 # only so that a package can be installed on this machine and looked at. The
 # certificate it makes is a throwaway.
 #
-# This is slipcase-desktop's script with the names changed, six assets where it
-# checks five, and an empty findings baseline. Every measurement in the comments
-# below was taken there unless it says otherwise.
+# This is slipcase-desktop's script with the names changed and six assets where
+# it checks five. A measurement in the comments below was taken there unless it
+# says otherwise.
 #
 # Author: David M. Anderson
 # Built with AI assistance (Claude, Anthropic)
@@ -58,17 +58,15 @@ $ErrorActionPreference = 'Stop'
 # so that `-Certify` can be quiet about those and loud about anything else.
 #
 # **This is a record of what is known, not a claim that it is acceptable.**
-# Whether to submit with `Blocked executables` failing is a decision, it is
-# David's. Recording a finding here does not take
-# it.
+# Whether to submit with `Blocked executables` failing is a decision for the
+# maintainer; recording a finding here does not take it.
 #
-# One entry, from the first kit run, 2026-09-04, against
-# `Filebase-0.1.0.0-x64.msix`. It was left empty until that run rather than copied
-# from slipcase-desktop's, because a baseline copied from another application is
-# a list of things somebody else measured. Traced rather than tolerated, and all
-# four messages come from two places:
+# One entry, from a kit run against this application's own package rather
+# than copied from slipcase-desktop's, because a baseline copied from another
+# application is a list of things somebody else measured. Traced rather than
+# tolerated, and the messages come from two places:
 #
-#   Blocked executables     Five messages. `kernel32.dll!CreateProcessW`, the
+#   Blocked executables     Several messages. `kernel32.dll!CreateProcessW`, the
 #                           `cmd.exe /e:ON /v:OFF /d /c` argument string and
 #                           `\cmd.exe` are the Rust standard library's
 #                           batch-file spawn path in `std::process`, linked in
@@ -86,9 +84,7 @@ $ErrorActionPreference = 'Stop'
 #                           instruction fragments. Neither is csi.exe and there
 #                           is nothing to remove.
 #
-#                           "CMd" arrived on 2026-09-06, against the v0.1.0
-#                           package; the 2026-09-04 run reported four messages.
-#                           Its three occurrences were located: the
+#                           The occurrences of "CMd" were located: the
 #                           displacement bytes of a `lea rax, [rip+...]` in
 #                           `.text`, and twice inside the embedded font data.
 #                           A displacement moves when any code above it moves,
@@ -212,9 +208,8 @@ if ($ReadReport) {
 # publisher display name, and the calculated forms. `Publisher` is the X.500
 # string Partner Center assigns per account, the same for every Excelano
 # product, and it comes from the environment so that a public repository does
-# not carry an account identifier: `windows.yml` passes the organisation
-# secret STORE_PUBLISHER, and a Windows machine sets STORE_PUBLISHER in its
-# own environment before running this.
+# not carry an account identifier: a Windows machine sets STORE_PUBLISHER in
+# its own environment before running this.
 $identityFile = Join-Path $here 'identity.psd1'
 if (-not (Test-Path $identityFile)) {
     Refuse "no identity at $identityFile - it is committed beside this script and should not be missing"
@@ -312,10 +307,9 @@ if ($subsystem -ne 2) {
 
 # The imports, because a DLL that is not part of Windows has to already be on
 # the machine before the application will start, and the machine that matters
-# is a certification tester's rather than this one. Slipcase 0.1.1 was packaged,
-# certified, submitted and failed on exactly that: it imported VCRUNTIME140.dll
-# from the Visual C++ Redistributable, which every machine here has and a clean
-# Windows does not. The check is its own script because CI runs it too, and it
+# is a certification tester's rather than this one: VCRUNTIME140.dll, from the
+# Visual C++ Redistributable, is on every machine here and not on a clean
+# Windows. The check is its own script so that it can run on its own, and it
 # is here because this is the last place a bad binary can still be stopped.
 & (Join-Path $here 'check-imports.ps1') -Binary $Binary
 if ($LASTEXITCODE -ne 0) {
@@ -422,8 +416,7 @@ $priConfig = Join-Path $OutDir 'priconfig.xml'
 # qualifier `en-US;de-DE`. If the two sides disagree the index has no default
 # language and the shell falls back to the literal paths, which is the failure
 # this whole step exists to remove - and it fails silently, so it is spelled
-# once here from the manifest's values. It was `en-GB` until 2026-09-06 and
-# `en-US` alone until 2026-09-10; the manifest carries the why.
+# once here from the manifest's values, and the manifest carries the why.
 & $makepri createconfig /cf $priConfig /dq en-US_de-DE /o | Out-Null
 if ($LASTEXITCODE -ne 0) { Refuse "makepri createconfig failed ($LASTEXITCODE)" }
 

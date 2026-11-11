@@ -3,24 +3,22 @@
     Refuse a binary that imports a DLL Windows does not ship.
 
 .DESCRIPTION
-    Slipcase 0.1.1 failed Microsoft Store certification on 2026-08-29 under
-    policy 10.2.4.1. The package installed on the tester's clean machine and
-    then would not start: *The code execution cannot proceed because
-    VCRUNTIME140.dll was not found.* That DLL ships in the Visual C++
-    Redistributable, not in Windows. `.cargo/config.toml` in this repository
-    carries the fix - `+crt-static` for this target - and this script is the
+    A binary importing a DLL that is not part of Windows installs on a clean
+    machine and then will not start: *The code execution cannot proceed
+    because VCRUNTIME140.dll was not found.* That DLL ships in the Visual C++
+    Redistributable, not in Windows, and Store policy 10.2.4.1 refuses it.
+    `.cargo/config.toml` in this repository carries the fix - `+crt-static` for this target - and this script is the
     guard on it.
 
-    Nothing this project runs could have caught it there. The tests pass, the
-    conformance corpus passes, the certification kit passed, and the
-    application starts - on a machine with Visual Studio installed, which is
-    every machine any of the three platforms has ever built on. The defect is
-    invisible from inside the toolchain that causes it, so the check has to be
-    about the artefact rather than about whether it runs here.
+    Nothing else this project runs catches it. The tests pass, the
+    certification kit passes, and the application starts - on a machine with
+    Visual Studio installed, which is every machine this project builds on.
+    The defect is invisible from inside the toolchain that causes it, so the check has to be
+    about the artifact rather than about whether it runs here.
 
-    This is the Windows analogue of the `ldd` line `linux.yml` uses to check
-    what the Linux binary links, and it exists for the same reason: the rule
-    means the outcome, so check the outcome.
+    This is the Windows analogue of `packaging/linux/check-libraries.sh`,
+    and it exists for the same reason: the rule means the outcome, so check
+    the outcome.
 
     It parses the PE import table itself rather than shelling out to dumpbin,
     because dumpbin comes with Visual C++ and a check that needs the toolchain
@@ -51,15 +49,10 @@ function Refuse([string] $why) {
 # this project has never seen before should stop a build and be looked at by a
 # person, which is the step that was missing when VCRUNTIME140.dll arrived.
 #
-# It is slipcase-desktop's list unchanged, which was worth checking rather than
-# assuming: this application renders through wgpu where that one renders through
-# glow, and the expectation was that Direct3D would add names here. It does not.
-# **The list below is segler's measurement, not this application's.** It is the
-# starting set, and the first run of this script against a real `slipcase-query.exe`
-# is what replaces it with what this binary actually imports. Treat a failure
-# on the first run as a list to correct rather than as a defect found.
-# 2026-09-04 against the release binary, and the two lists are the same because
-# what a window imports is the window, not the renderer.
+# It is the set a window built on winit and wgpu imports; what a window
+# imports is the window, not the renderer. A name this script refuses that
+# turns out to be a Windows component is a list to correct rather than a
+# defect found.
 #
 # **d3d12.dll is deliberately absent and this check does not cover it.** wgpu
 # reaches Direct3D through `LoadLibrary` at run time rather than through the

@@ -105,7 +105,7 @@ It makes no network connection of any kind. There is no server behind it, no acc
 
 OPEN SOURCE
 
-Written in Rust, free, and open source under the MIT licence, at github.com/excelano/slipcase-query. The query engine is a separate crate anyone can build on, and the format is a published specification that any ZIP tool can read.
+Written in Rust, free, and open source under the MIT license, at github.com/excelano/slipcase-query. The query engine is a separate crate anyone can build on, and the format is a published specification that any ZIP tool can read.
 """
 
 [locales."en-us".apple]
@@ -136,7 +136,7 @@ features = [
   "No index and no library: every query is a fresh scan, so the answer is what is on disk now.",
   "No network connection of any kind. No account, no analytics, no telemetry, no crash reporting.",
   "Stores nothing on your disk: no settings file, no recent-folders list, no cache.",
-  "Written in Rust and open source under the MIT licence, and so is the format it reads.",
+  "Written in Rust and open source under the MIT license, and so is the format it reads.",
 ]
 keywords = [
   "Slipcase",

@@ -8,7 +8,7 @@
 //!
 //! Nothing in this crate parses a container or a query: every row comes from
 //! `slipql` in `excelano/slipql` and every container fact from `slpc` in
-//! `excelano/slpc-rust`. Behaviour either of them lacks goes into that library
+//! `excelano/slpc-rust`. Behavior either of them lacks goes into that library
 //! rather than in here.
 //
 // Author: David M. Anderson

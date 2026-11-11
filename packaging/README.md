@@ -6,20 +6,18 @@ this level for what more than one of them uses.
     icons/        the drawing, and every raster made from it
     make-icons/   the tool that makes them
     version.sh    the only thing that reads the version
+    demo-corpus.sh  the folder of containers the screenshots are taken of
     linux/        the desktop entry, the icon, and the library check
     debian/       the .deb
-
-Linux is the only platform arm here. The Windows and macOS arms arrive with
-their lanes; `make-icons` already writes what both of them will want, because
-the icon is the one artefact that would otherwise sit on a platform session's
-critical path.
+    windows/      the MSIX package for the Microsoft Store
+    macos/        the bundle, and the package for the Mac App Store
 
 ## The version lives in one place
 
 `Cargo.toml` holds it. `version.sh` is the only thing that reads it, and it
-answers in whichever spelling a lane asks for — Debian's plain string today,
-and the four-part Windows number and the two Apple ones when there is something
-to ask. Nothing else parses that file.
+answers in whichever spelling a lane asks for: Debian's plain string, the
+four-part Windows number, and the two Apple ones. Nothing else parses that
+file.
 
 ## The icon
 
@@ -62,20 +60,39 @@ argument at all.
     ./packaging/linux/check-libraries.sh     # needs a display
     ./packaging/linux/install.sh             # for a build from this checkout
 
-`debian/control.in` writes the `Depends` line by hand, and that is deliberate.
-The executable links libc and libgcc and nothing else; the display stack, the
-graphics driver loader and the keyboard map libraries are all opened by name at
-run time, so `dpkg-shlibdeps` finds two of a dozen. `check-libraries.sh` is what
-makes the hand-written list honest: it runs the binary under each display
-backend, reads `/proc/PID/maps`, and reports any object that is not reachable
-from a package named in `Depends`.
+`debian/control.in` writes the `Depends` line by hand. The executable links
+libc and libgcc and nothing else; the display stack, the graphics driver
+loader and the keyboard map libraries are all opened by name at run time, so
+`dpkg-shlibdeps` finds two of a dozen. `check-libraries.sh` runs the binary
+under each display backend, reads `/proc/PID/maps`, and reports any object
+not reachable from a package named in `Depends`.
 
 It needs a folder to bind to and nothing in it, because Slipcase Query opens a window
 against whatever it is pointed at. The applications that open a *document* need
 a conformant fixture at this point, since a refusal takes a different path and
 may not reach the graphics driver; a folder has no such distinction.
 
-`debian/changelog` carries the version with no Debian revision — `0.1.0`, not
-`0.1.0-1` — because `build-deb.sh` checks it against `Cargo.toml` and the two
-have to be the same string. Its date has to name the right weekday, which
-lintian checks and which has failed a sibling's every run for a release.
+`debian/changelog` carries the version with no Debian revision, because
+`build-deb.sh` checks it against `Cargo.toml` and the two have to be the same
+string. Its date has to name the right weekday, which lintian checks.
+
+## Windows
+
+    powershell -ExecutionPolicy Bypass -File packaging\windows\build-msix.ps1
+
+builds the package from a release build on a Windows machine with the Windows
+SDK, against the identity in `identity.psd1` and the publisher string from the
+`STORE_PUBLISHER` environment variable. `-SelfSign` signs it with a throwaway
+certificate so it can be installed and looked at, and `-Certify` runs the
+certification kit. `check-imports.ps1` refuses any import that does not ship
+with Windows, which is what shows that `+crt-static` in `.cargo/config.toml`
+took. `shots.ps1` holds the Microsoft Store screenshot recipes.
+
+## macOS
+
+    cargo build --release
+    ./packaging/macos/build-app.sh --sign "Apple Development: <Your Name> (<TEAMID>)"
+
+assembles `dist/Slipcase Query.app` and signs it into the App Sandbox.
+`--store` with the Mac App Store profile builds the package that is uploaded;
+`ship-macstore` runs it. `macos/README.md` has the rest.

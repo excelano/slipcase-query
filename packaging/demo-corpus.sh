@@ -26,7 +26,7 @@
 #   - Content files of several kinds, so the content file card is not five
 #     copies of one sentence.
 #
-# **The subject is invented.** No real person, organisation, matter or date
+# **The subject is invented.** No real person, organization, matter or date
 # appears in it, because these frames go into two store listings and onto a
 # website. The names are the two the fleet's other samples use.
 #

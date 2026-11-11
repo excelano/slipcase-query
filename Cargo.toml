@@ -43,7 +43,7 @@ slipql = { version = "0.3", default-features = false }
 slpc = { version = "0.7", features = ["fs"] }
 # The flyleaf tree, drawn read-only here through `ReadOnly` in `src/policy.rs`.
 # One TOML editor across Tommy Flyleaf, Slipcase Desktop and this, rather than
-# three that drift; behaviour it lacks goes there.
+# three that drift; behavior it lacks goes there.
 #
 # `default-features = false` leaves its own application binary, eframe and rfd
 # behind; this crate has its own of each. Its `egui` is the one `eframe`
@@ -86,12 +86,12 @@ tempfile = "3.27"
 # is for the large entries, which are stored that way.
 ico = "0.5.0"
 
-# A Mac App Store submission was refused on 2026-08-31 under Guideline 2.5.1 for
-# referencing `_CGSSetWindowBackgroundBlurRadius`, a private CoreGraphics symbol
-# nothing here calls. `winit` declares it in `platform_impl/macos/ffi.rs` and
+# App Review refuses a binary under Guideline 2.5.1 for referencing
+# `_CGSSetWindowBackgroundBlurRadius`, a private CoreGraphics symbol nothing
+# here calls. `winit` declares it in `platform_impl/macos/ffi.rs` and
 # calls it from `WindowDelegate::set_blur`, neither behind a feature nor a `cfg`,
 # and review reads the symbol table rather than the call graph. slipcase-desktop
-# lost a review cycle to it and measured that a build flag does not help: fat LTO
+# measured that a build flag does not help: fat LTO
 # with `-Wl,-dead_strip` still carries the symbol, the call sitting behind a
 # runtime `if attrs.blur` the optimizer will not fold.
 #
