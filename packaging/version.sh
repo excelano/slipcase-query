@@ -6,11 +6,6 @@
 # parses it once rather than leaving a copy of the same `sed` in each lane's
 # build script.
 #
-# Only `build-deb.sh` calls it today, and only for the plain spelling. The other
-# three modes are here because the lanes that need them — an MSIX manifest, a
-# macOS `Info.plist` — are built from this same file when they arrive, and the
-# awkward one below is worth reading before then.
-#
 #   ./packaging/version.sh              0.1.0     Cargo's own, and Debian's
 #   ./packaging/version.sh --appx       0.1.0.0   four parts, the Store requires
 #                                                 the fourth to be 0
