@@ -233,7 +233,9 @@ mod tests {
     /// gibibyte content file as four figures of mebibytes.
     #[test]
     fn scaling_climbs_past_the_first_unit() {
-        assert!(content_file(5 * 1024 * 1024).size_line().contains("5.0 MiB"));
+        assert!(content_file(5 * 1024 * 1024)
+            .size_line()
+            .contains("5.0 MiB"));
         assert!(content_file(3 * 1024 * 1024 * 1024)
             .size_line()
             .contains("3.0 GiB"));

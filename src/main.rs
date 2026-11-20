@@ -533,35 +533,37 @@ impl App {
         let mut chosen: Option<String> = None;
         let selected = self.selected.as_ref().map(|d| d.relative.clone());
 
-        egui::ScrollArea::both().auto_shrink([false, false]).show(ui, |ui| {
-            egui::Grid::new("results")
-                .striped(true)
-                .num_columns(run.columns().len())
-                .show(ui, |ui| {
-                    for column in run.columns() {
-                        ui.strong(column);
-                    }
-                    ui.end_row();
-                    for row in run.rows() {
-                        let is_selected = selected.as_deref() == Some(row.path.as_str());
+        egui::ScrollArea::both()
+            .auto_shrink([false, false])
+            .show(ui, |ui| {
+                egui::Grid::new("results")
+                    .striped(true)
+                    .num_columns(run.columns().len())
+                    .show(ui, |ui| {
                         for column in run.columns() {
-                            // Every cell of the row is selectable and selects
-                            // the whole row. A `Grid` has no row to click —
-                            // there is no widget spanning one — so the row is
-                            // made of cells that all do the same thing, which
-                            // also gives the whole row the selected background
-                            // rather than one cell of it.
-                            if ui
-                                .selectable_label(is_selected, query::cell(row, column))
-                                .clicked()
-                            {
-                                chosen = Some(row.path.clone());
-                            }
+                            ui.strong(column);
                         }
                         ui.end_row();
-                    }
-                });
-        });
+                        for row in run.rows() {
+                            let is_selected = selected.as_deref() == Some(row.path.as_str());
+                            for column in run.columns() {
+                                // Every cell of the row is selectable and selects
+                                // the whole row. A `Grid` has no row to click —
+                                // there is no widget spanning one — so the row is
+                                // made of cells that all do the same thing, which
+                                // also gives the whole row the selected background
+                                // rather than one cell of it.
+                                if ui
+                                    .selectable_label(is_selected, query::cell(row, column))
+                                    .clicked()
+                                {
+                                    chosen = Some(row.path.clone());
+                                }
+                            }
+                            ui.end_row();
+                        }
+                    });
+            });
 
         if let Some(relative) = chosen {
             if let Some(folder) = self.folder.clone() {
@@ -591,7 +593,9 @@ impl App {
         ui.strong(detail.relative.clone());
         ui.add_space(8.0);
 
-        let can_open = detail.content().is_some_and(slipcase_query::detail::ContentFile::can_be_opened);
+        let can_open = detail
+            .content()
+            .is_some_and(slipcase_query::detail::ContentFile::can_be_opened);
         match &detail.outcome {
             Outcome::Unreadable(why) => {
                 ui.colored_label(ui.visuals().error_fg_color, why);
@@ -669,7 +673,10 @@ mod tests {
             Some("de")
         );
         assert_eq!(slipcase_query::i18n::t("Content file"), "Inhaltsdatei");
-        assert_eq!(slipcase_query::i18n::t("Open content file"), "Inhaltsdatei öffnen");
+        assert_eq!(
+            slipcase_query::i18n::t("Open content file"),
+            "Inhaltsdatei öffnen"
+        );
         // A message with a placeholder: the braces have to survive the
         // translation, because `fill` looks them up by name afterwards.
         assert!(slipcase_query::i18n::t("{path} is not a folder.").contains("{path}"));

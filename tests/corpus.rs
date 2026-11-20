@@ -187,7 +187,11 @@ fn a_filter_reaches_the_scan() {
     );
     let owners = cells(&run, "governance.owner");
     assert_eq!(owners.len(), 3);
-    assert_eq!(owners.iter().filter(|o| o.is_empty()).count(), 1, "{owners:?}");
+    assert_eq!(
+        owners.iter().filter(|o| o.is_empty()).count(),
+        1,
+        "{owners:?}"
+    );
 }
 
 /// Would catch `select *`'s columns being taken from the first row, which is
@@ -242,8 +246,8 @@ fn a_version_1_0_container_is_reported_as_a_version_this_does_not_read() {
     use std::io::Write;
     let root = tempfile::tempdir().unwrap();
     let mut w = zip::ZipWriter::new(std::fs::File::create(root.path().join("old.slpc")).unwrap());
-    let opts = zip::write::SimpleFileOptions::default()
-        .compression_method(zip::CompressionMethod::Stored);
+    let opts =
+        zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored);
     w.start_file("slipcase.metadata.toml", opts).unwrap();
     w.write_all(b"slipcase_version = \"1.0\"\n\n[payload]\nfile = \"a.txt\"\n")
         .unwrap();
@@ -292,7 +296,11 @@ fn a_comparison_across_types_is_counted_and_said() {
 #[test]
 fn a_selected_row_opens_the_container_the_row_names() {
     let root = corpus();
-    let run = run_to_end(root.path(), true, r#"select @path where title = "Q3 report""#);
+    let run = run_to_end(
+        root.path(),
+        true,
+        r#"select @path where title = "Q3 report""#,
+    );
     assert_eq!(run.rows().len(), 1);
 
     let relative = run.rows()[0].path.clone();
@@ -398,6 +406,9 @@ fn a_limit_stops_the_scan() {
     let root = corpus();
     let run = run_to_end(root.path(), true, "select @path limit 2");
     assert_eq!(run.rows().len(), 2);
-    assert!(!run.notices().unwrap().truncated, "a limit is not a ceiling");
+    assert!(
+        !run.notices().unwrap().truncated,
+        "a limit is not a ceiling"
+    );
     assert!(run.status().starts_with("2 rows"), "{}", run.status());
 }
