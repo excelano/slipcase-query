@@ -2937,6 +2937,7 @@ dependencies = [
  "slipql",
  "slpc",
  "tempfile",
+ "zip",
 ]
 
 [[package]]

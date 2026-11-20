@@ -234,6 +234,29 @@ fn what_the_scan_could_not_use_is_reported() {
     assert!(run.status().contains("1 skipped"), "{}", run.status());
 }
 
+#[test]
+fn a_version_1_0_container_is_reported_as_a_version_this_does_not_read() {
+    use std::io::Write;
+    let root = tempfile::tempdir().unwrap();
+    let mut w = zip::ZipWriter::new(std::fs::File::create(root.path().join("old.slpc")).unwrap());
+    let opts = zip::write::SimpleFileOptions::default()
+        .compression_method(zip::CompressionMethod::Stored);
+    w.start_file("slipcase.metadata.toml", opts).unwrap();
+    w.write_all(b"slipcase_version = \"1.0\"\n\n[payload]\nfile = \"a.txt\"\n")
+        .unwrap();
+    w.start_file("a.txt", opts).unwrap();
+    w.write_all(b"x").unwrap();
+    w.finish().unwrap();
+
+    let run = run_to_end(root.path(), false, "select @path");
+    let notices = run.notices().expect("a finished run has notices");
+
+    assert_eq!(
+        notices.skipped,
+        ["skipped old.slpc: slipcase_version \"1.0\" is not one this build implements (SPEC 3)"]
+    );
+}
+
 /// Would catch a comparison across types being silently unknown, which is what
 /// hides a flyleaf authoring mistake: `pages = "many"` against `pages > 10` is
 /// neither true nor false, and the row's absence is the only evidence.

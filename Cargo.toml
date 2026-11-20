@@ -104,5 +104,8 @@ ico = "0.5.0"
 # candidates, and winit's tree carries `dpi` behind a `path =` that
 # `cargo publish` strips, so the first pin silently took `dpi` 0.1.1 where the
 # release resolves 0.1.2. Check the lockfile moves by one line on any re-pin.
+[dev-dependencies]
+zip = { version = "9.1", default-features = false }
+
 [patch.crates-io]
 winit = { git = "https://github.com/excelano/winit", rev = "3cfd905679da3ca241b97dea723211b580620a27" }
