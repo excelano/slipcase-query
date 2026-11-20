@@ -234,6 +234,9 @@ fn what_the_scan_could_not_use_is_reported() {
     assert!(run.status().contains("1 skipped"), "{}", run.status());
 }
 
+/// Would catch a container declaring another `slipcase_version` being skipped
+/// as broken, which tells a person to repair a file that only needs a newer
+/// reader.
 #[test]
 fn a_version_1_0_container_is_reported_as_a_version_this_does_not_read() {
     use std::io::Write;
