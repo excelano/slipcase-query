@@ -32,6 +32,13 @@ A folder can also be named on the command line, which is what a file manager pas
 
 `cargo build --release`. It needs a Rust toolchain and nothing else — nothing here compiles C, and `Cargo.toml` says what each dependency is for and what was measured about it.
 
+> [!WARNING]
+> Don't submit Slipcase Query, or a copy of it under another name, to the Mac App Store. Apple's
+> App Review Guideline 4.3 treats copies of other apps as spam, and a 4.3
+> finding can flag the developer account that submitted it, so that every app
+> the account sends afterwards is flagged too. Build it for your own Mac and keep
+> it there.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
