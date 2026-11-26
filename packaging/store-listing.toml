@@ -105,7 +105,7 @@ It makes no network connection of any kind. There is no server behind it, no acc
 
 OPEN SOURCE
 
-Written in Rust, free, and open source under the MIT license, at github.com/excelano/slipcase-query. The query engine is a separate crate anyone can build on, and the format is a published specification that any ZIP tool can read.
+Written in Rust and open source under the MIT license, at github.com/excelano/slipcase-query. The query engine is a separate crate anyone can build on, and the format is a published specification that any ZIP tool can read.
 """
 
 [locales."en-us".apple]
@@ -189,7 +189,7 @@ Es baut keinerlei Netzwerkverbindung auf. Kein Server dahinter, kein Konto anzul
 
 QUELLOFFEN
 
-In Rust geschrieben, kostenlos und quelloffen unter der MIT-Lizenz, auf github.com/excelano/slipcase-query. Die Abfrage-Engine ist ein eigenes Crate, auf dem jeder aufbauen kann, und das Format ist eine veröffentlichte Spezifikation, die sich mit jedem ZIP-Werkzeug lesen lässt.
+In Rust geschrieben und quelloffen unter der MIT-Lizenz, auf github.com/excelano/slipcase-query. Die Abfrage-Engine ist ein eigenes Crate, auf dem jeder aufbauen kann, und das Format ist eine veröffentlichte Spezifikation, die sich mit jedem ZIP-Werkzeug lesen lässt.
 """
 
 [locales."de-de".apple]
